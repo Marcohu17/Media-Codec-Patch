@@ -4,8 +4,8 @@
 
 SKIPUNZIP=0
 
-ui_print "- Media Codec Patch"
-ui_print "- installing baseline diagnostics"
+ui_print "- LSPosed Stealth"
+ui_print "- installing runtime config audit"
 
 if [ -d /data/adb/ksu ]; then
   ui_print "- KernelSU detected"
@@ -81,4 +81,4 @@ if [ -f "$MODPATH/common/migrate.sh" ]; then
 fi
 
 ui_print "- done, open the module WebUI for the first scan"
-ui_print "- finish setup before signing in to WeChat"
+ui_print "- finish setup before opening the target app"

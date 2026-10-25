@@ -1,4 +1,4 @@
-# Media Codec Patch
+# LSPosed Stealth
 
 一个 KernelSU 模块，用来守住 LSPosed 作用域、Zygisk 排除名单与挂载隔离这三项
 运行时配置的基线，并在配置走样、痕迹残留时把问题暴露出来。
@@ -62,7 +62,7 @@ LKM 是加载的内核模块，GKI 是编译进内核镜像，两者在 `/sys/mo
 ## 三、组成
 
 ```
-module.prop            模块声明（默认伪装成系统组件风格的文案）
+module.prop            模块声明（id、版本、用途说明）
 customize.sh           安装期检查
 post-fs-data.sh        开机早期：目录准备、属性伪装（可选）
 service.sh             开机后期：拉起后台循环
@@ -251,10 +251,10 @@ audit.log / scrub.log / mute.log / autoconfig.log / upstream.log
 # 默认，用 module.prop 里现有的 id
 powershell -ExecutionPolicy Bypass -File tools\pack.ps1
 
-# 换成一个系统组件风格的名字
+# 换 id 与显示名
 powershell -ExecutionPolicy Bypass -File tools\pack.ps1 `
-  -ModuleId sys_media_codec_patch `
-  -ModuleName "Media Codec Patch"
+  -ModuleId my_module `
+  -ModuleName "LSPosed Stealth"
 
 # 换输出目录
 powershell -ExecutionPolicy Bypass -File tools\pack.ps1 -OutputDir D:\out

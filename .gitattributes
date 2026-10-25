@@ -1,0 +1,6 @@
+# Android 的 /system/bin/sh 不能带 CR 字符。
+# 本机 core.autocrlf=true，检出时会把 .sh 改成 CRLF，打包脚本随即拒绝出包。
+# 在这里固定成 LF，让工作区、仓库、zip 三处一致，与平台设置无关。
+*.sh text eol=lf
+*.prop text eol=lf
+*.rule text eol=lf

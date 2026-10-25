@@ -1,6 +1,6 @@
 id=lsposed_stealth
-name=Media Codec Patch
+name=LSPosed Stealth
 version=v1.2.2
 versionCode=8
 author=system
-description=Compatibility shim for legacy media playback paths. Provides baseline diagnostics and trace cleanup for codec fallbacks.
+description=Audits the LSPosed scope, Zygisk denylist and mount isolation that decide what the target app can see. Every check reports pass, broken or unreadable.

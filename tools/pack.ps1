@@ -3,8 +3,8 @@
 
   Usage:
     powershell -ExecutionPolicy Bypass -File tools\pack.ps1
-    powershell -ExecutionPolicy Bypass -File tools\pack.ps1 -ModuleId sys_media_codec_patch
-    powershell -ExecutionPolicy Bypass -File tools\pack.ps1 -ModuleId x -ModuleName "Media Codec Patch" -OutputDir D:\out
+    powershell -ExecutionPolicy Bypass -File tools\pack.ps1 -ModuleId my_module
+    powershell -ExecutionPolicy Bypass -File tools\pack.ps1 -ModuleId x -ModuleName "LSPosed Stealth" -OutputDir D:\out
 
   The module id ends up in two places: module.prop and webroot/app.js.
   Everything else derives its paths at runtime from module.prop, so nothing
@@ -88,7 +88,7 @@ else { New-Item -ItemType Directory -Force -Path $OutputDir | Out-Null }
 $stage = Join-Path ([System.IO.Path]::GetTempPath()) ("mcp-stage-" + [guid]::NewGuid().ToString('N').Substring(0, 8))
 New-Item -ItemType Directory -Force -Path $stage | Out-Null
 
-$skip = @('tools', 'dist', '.git', '.cyrene', 'README.md')
+$skip = @('tools', 'dist', 'release', '.git', '.cyrene', '.gitattributes', '.gitignore', 'LICENSE', 'README.md')
 Get-ChildItem -Path $ModuleRoot -Force | Where-Object { $skip -notcontains $_.Name } | ForEach-Object {
   Copy-Item -Path $_.FullName -Destination $stage -Recurse -Force
 }
@@ -96,7 +96,7 @@ Write-Host "[ok] staged to $stage"
 
 # ---------- rewrite id / name ----------
 $stagedProp = Join-Path $stage 'module.prop'
-$lines = [System.IO.File]::ReadAllText($stagedProp) -split "`n"
+$lines = [System.IO.File]::ReadAllText($stagedProp) -split "`n" | ForEach-Object { $_.TrimEnd("`r") }
 $out = New-Object System.Collections.Generic.List[string]
 
 foreach ($line in $lines) {
