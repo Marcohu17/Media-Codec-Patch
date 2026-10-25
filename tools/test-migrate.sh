@@ -78,13 +78,13 @@ r=$(run --apply)
 expect "fresh: apply created"    '"created":true' "$r"
 expect "fresh: added 8"          '"added_count":8' "$r"
 expect "fresh: apply recorded"   '"install_recorded":true' "$r"
-expect "fresh: version written"  '"version":"v1.2.2"' "$r"
+expect "fresh: version written"  '"version":"v1.2.2-beta"' "$r"
 expect "apply: schema stamped"   'schema_version=1' "$(cat "$CONF")"
 
 r=$(run --check)
 expect "fresh: now current"      '"state":"current"' "$r"
 expect "fresh: eight of eight"   '"keys_present":8' "$r"
-expect "fresh: install known"    '"installed_version":"v1.2.2"' "$r"
+expect "fresh: install known"    '"installed_version":"v1.2.2-beta"' "$r"
 
 r=$(run --apply)
 expect "second apply: no record" '"install_recorded":false' "$r"
@@ -151,7 +151,7 @@ SNAP_A=$(printf '%s' "$r" | sed -n 's/.*"name":"\([^"]*\)".*/\1/p' | head -n1)
 }
 
 expect "snapshot: meta written"  'label=manual' "$(cat "$DATA/backup/$SNAP_A/meta.txt" 2>/dev/null)"
-expect "snapshot: meta version"  'version=v1.2.2' "$(cat "$DATA/backup/$SNAP_A/meta.txt" 2>/dev/null)"
+expect "snapshot: meta version"  'version=v1.2.2-beta' "$(cat "$DATA/backup/$SNAP_A/meta.txt" 2>/dev/null)"
 
 # ---------- 6. restore ----------
 sh "$MODROOT/common/conf.sh" set mute_mode off >/dev/null 2>&1

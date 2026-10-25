@@ -73,7 +73,7 @@ system.prop            故意留空，理由写在文件里
 
 common/env.sh          运行时探测层（busybox / ksud / sqlite3 / resetprop / 内核形态 / SUSFS）
 common/targets.sh      目标应用清单，加新应用只改这里
-common/audit.sh        五项检查 + 生成 report.json
+common/audit.sh        七项检查 + 生成 report.json
 common/scrub.sh        隔离式清扫、回收、还原
 common/mute.sh         日志抑制（温和 / 激进）
 common/conf.sh         配置读写，给面板用
@@ -101,8 +101,9 @@ tools/pack.ps1         打包脚本
 仓库里的成品包放在 `release/`，文件名带版本号。当前这一份：
 
 ```
-release/lsposed_stealth-v1.2.2.zip
-SHA256  5bfa9463ff25a7d5ff1d3b74ad3364567cd02201a97b3a936c8d466eb6b6c58e
+release/lsposed_stealth-v1.2.2-beta.zip
+55,495 bytes
+SHA256  4d6aa5312d23d2857aa0f43f9be8fc53ec96331865afe55c8acf7106a877eda3
 ```
 
 ---

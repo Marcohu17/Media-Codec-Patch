@@ -176,9 +176,9 @@
       schema_expected: 1,
       backups: mig.backups,
       last_backup: mig.last,
-      installed_version: current ? 'v1.2.2' : 'v1.2.1',
+      installed_version: current ? 'v1.2.2-beta' : 'v1.2.1',
       installed_at: '2026-10-20 21:14:00',
-      module_version: 'v1.2.2',
+      module_version: 'v1.2.2-beta',
       module_code: '8'
     };
   }

@@ -1,6 +1,6 @@
 id=lsposed_stealth
 name=LSPosed Stealth
-version=v1.2.2
-versionCode=8
+version=v1.2.2-beta
+versionCode=9
 author=system
 description=Audits the LSPosed scope, Zygisk denylist and mount isolation that decide what the target app can see. Every check reports pass, broken or unreadable.
