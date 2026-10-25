@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Media Codec Patch</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">
+    <span class="title">Media Codec Patch</span>
+    <span class="sub" id="mod-version">—</span>
+  </div>
+  <div class="light" id="light" data-level="unknown">
+    <span class="dot"></span>
+    <span class="light-text" id="light-text">未扫描</span>
+  </div>
+</header>
+
+<div class="note">
+  能验证配置对不对，不能验证应用实际看见什么。下面每项都标了查得到还是查不到。
+</div>
+
+<section class="stats" id="stats">
+  <div class="stat"><span class="num ok" id="n-ok">0</span><span class="lbl">通过</span></div>
+  <div class="stat"><span class="num bad" id="n-bad">0</span><span class="lbl">异常</span></div>
+  <div class="stat"><span class="num unknown" id="n-unk">0</span><span class="lbl">查不到</span></div>
+  <div class="stat"><span class="num na" id="n-na">0</span><span class="lbl">不适用</span></div>
+</section>
+
+<div class="meta" id="meta">还没有扫描记录</div>
+
+<section class="actions">
+  <button id="btn-scan" class="primary">立即扫描</button>
+  <button id="btn-scrub-preview">清扫预览</button>
+  <button id="btn-scrub">执行清扫</button>
+  <button id="btn-restore">还原最近一次</button>
+  <button id="btn-release">释放日志锁</button>
+</section>
+
+<main id="targets" class="targets"></main>
+
+<section class="panel">
+  <h2>自动配置</h2>
+
+  <p class="hint">
+    只会改两类东西：KernelSU 的 feature 开关，和本模块自己的目录权限。
+    不写 LSPosed 作用域、不写 denylist、不写 Zygisk 排除名单。
+    装了 HMA-OSS 这类注入隐藏模块时，涉及注入面的项会自动跳过并写明原因。
+  </p>
+
+  <div class="actions ac">
+    <button id="btn-ac-preview">预览</button>
+    <button id="btn-ac-apply" class="primary">执行</button>
+    <button id="btn-ac-rollback">回滚</button>
+    <button id="btn-ac-upstream">核对上游</button>
+  </div>
+
+  <div class="ac-summary" id="ac-summary">还没有执行记录</div>
+  <div class="ac-list" id="ac-list"></div>
+  <div class="ac-upstream" id="ac-upstream">上游状态：还没核对过</div>
+</section>
+
+<section class="panel">
+  <h2>HMA 隐藏配置</h2>
+
+  <p class="hint">
+    只读。这里只把 HMA 存了什么读出来给你看，一个字节都不写。
+    HMA 退出时会把内存里的状态写回磁盘，外部改的文件会被它覆盖，
+    中间那段还可能被它读到半截。
+  </p>
+
+  <button id="btn-hma" class="wide">探测 HMA 配置</button>
+
+  <div class="hma-summary" id="hma-summary">还没有探测记录</div>
+  <div class="hma-body" id="hma-body"></div>
+
+  <details class="hma-raw-wrap">
+    <summary>原始结果（要发给人家看就复制这里）</summary>
+    <div class="raw" id="hma-raw"></div>
+  </details>
+</section>
+
+<section class="panel">
+  <h2>更新与配置</h2>
+
+  <p class="hint">
+    设置和扫描结果存在数据目录里，刷入新版本只替换模块代码，这些内容会原样保留。
+    新版本新增的配置键会按默认值补上，已经设过的值一个字都不动。
+  </p>
+
+  <div class="mig-summary" id="mig-summary">还没有核对</div>
+  <div class="mig-body" id="mig-body"></div>
+
+  <div class="actions mig">
+    <button id="btn-mig-check">核对配置</button>
+    <button id="btn-mig-snapshot">立即备份</button>
+    <button id="btn-mig-restore" class="mig-wide">从最近快照恢复</button>
+  </div>
+
+  <p class="hint" id="mig-note">
+    恢复会用快照覆盖当前设置。覆盖之前会先给现在的状态备份一份，所以退回去之后还能再退回来。
+  </p>
+</section>
+
+<section class="panel">
+  <h2>设置</h2>
+
+  <div class="row">
+    <label for="cfg-daemon">后台守护</label>
+    <input type="checkbox" id="cfg-daemon">
+  </div>
+
+  <div class="row">
+    <label for="cfg-interval">扫描间隔（秒）</label>
+    <input type="number" id="cfg-interval" min="60" step="60">
+  </div>
+
+  <div class="row">
+    <label for="cfg-scrub">自动清扫</label>
+    <input type="checkbox" id="cfg-scrub">
+  </div>
+
+  <div class="row">
+    <label for="cfg-keep">隔离保留（天）</label>
+    <input type="number" id="cfg-keep" min="1" step="1">
+  </div>
+
+  <div class="row">
+    <label for="cfg-mute">日志抑制</label>
+    <select id="cfg-mute">
+      <option value="gentle">温和（超量才清）</option>
+      <option value="aggressive">激进（加不可变锁）</option>
+      <option value="off">关闭</option>
+    </select>
+  </div>
+
+  <div class="row">
+    <label for="cfg-prop">属性伪装</label>
+    <input type="checkbox" id="cfg-prop">
+  </div>
+
+  <p class="hint">属性伪装会改写 ro.debuggable 等只读属性，重启生效，可能影响其他应用。默认关闭。</p>
+
+  <button id="btn-save" class="primary wide">保存设置</button>
+</section>
+
+<section class="panel">
+  <h2>环境</h2>
+  <div class="env" id="env"></div>
+  <p class="hint" id="ceiling" hidden></p>
+  <div class="env" id="heartbeat"></div>
+</section>
+
+<footer>
+  <p>能力边界：模块跑在 root 命名空间，读的是配置与文件痕迹。目标应用进程内的 maps、堆栈、代码段完整性由它自己判定，模块接触不到。</p>
+</footer>
+
+<div id="toast" class="toast" hidden></div>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+# KernelSU / Magisk sepolicy additions, applied at boot.
+#
+# Deliberately empty. Everything this module does runs from the root shell in
+# the su domain, which already has the access it needs for /data/adb and
+# /data/system/dropbox. Adding broad rules here would widen the kernel policy
+# for no functional gain.
+#
+# If a future check needs extra access, add the narrowest rule that works and
+# document why, e.g.:
+#   allow su system_data_file dir { search write add_name remove_name }

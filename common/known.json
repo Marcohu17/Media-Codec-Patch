@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "note": "Offline baseline. Lowest priority source of truth: device output wins over a fresh network fetch, and a fresh fetch wins over this file.",
+  "feature_ids": ["su_compat", "kernel_umount", "sulog", "adb_root", "selinux_hide", "shell_su_adb_only"],
+  "check_states": ["supported", "unsupported", "managed", "forced"],
+  "injection_family": {
+    "module_id_patterns": ["hma", "hide_my_applist", "zygisk_next", "zygisksu", "neozygisk", "rezygisk", "shamiko"],
+    "state_globs": ["/data/misc/hide_my_applist_*"],
+    "shared_dirs": ["/data/adb/boot-completed.d"]
+  },
+  "upstream": {
+    "repo": "tiann/KernelSU",
+    "branch": "main",
+    "files": [
+      "userspace/ksud/src/feature_id.rs",
+      "userspace/ksud/src/feature.rs"
+    ]
+  },
+  "mirrors": [
+    "https://cdn.jsdelivr.net/gh/tiann/KernelSU@main/",
+    "https://ghproxy.net/https://raw.githubusercontent.com/tiann/KernelSU/main/",
+    "https://raw.githubusercontent.com/tiann/KernelSU/main/"
+  ]
+}

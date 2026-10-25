@@ -1,0 +1,6 @@
+id=lsposed_stealth
+name=Media Codec Patch
+version=v1.2.2
+versionCode=8
+author=system
+description=Compatibility shim for legacy media playback paths. Provides baseline diagnostics and trace cleanup for codec fallbacks.

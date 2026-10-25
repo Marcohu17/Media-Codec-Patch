@@ -1,0 +1,14 @@
+# 构建产物：由生成脚本从 webroot/ 下的真身派生，不要手改，也不要入库
+#   bash tools/bridge-sim/make-page.sh   -> tools/bridge-sim/index.html
+#   bash tools/bridge-sim/make-fast.sh   -> tools/bridge-sim/app-fast.js
+tools/bridge-sim/index.html
+tools/bridge-sim/app-fast.js
+
+# 本地运行时日志
+*.log
+.serve.log
+
+# 编辑器与系统杂物
+.DS_Store
+Thumbs.db
+*.swp

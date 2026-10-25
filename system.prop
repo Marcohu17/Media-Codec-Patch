@@ -1,0 +1,6 @@
+# Property overrides applied by the root manager at boot.
+#
+# Intentionally empty. The optional property guard in post-fs-data.sh uses
+# resetprop instead, so it can be switched on and off from the panel without
+# reinstalling the module. Keeping this file empty means no override happens
+# unless the user asks for one.
