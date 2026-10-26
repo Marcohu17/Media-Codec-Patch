@@ -555,3 +555,10 @@ sh /data/adb/modules/lsposed_stealth/common/autoconfig.sh --status
 搬到一块面板上，并且在你忘记检查的时候提醒你。
 
 剩下的部分，交给真机上的检测器去回答。
+
+---
+
+### 赞赏
+
+赞赏支持一下，可以请孩子喝杯咖啡☕️
+
