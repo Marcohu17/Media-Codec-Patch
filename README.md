@@ -561,4 +561,7 @@ sh /data/adb/modules/lsposed_stealth/common/autoconfig.sh --status
 ### 赞赏
 
 赞赏支持一下，可以请孩子喝杯咖啡☕️
+爱发电 https://afdian.com/a/Marcohu17?utm_source=copylink&utm_medium=link
+
+
 
